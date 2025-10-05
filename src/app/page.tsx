@@ -1,11 +1,11 @@
 import Link from 'next/link';
+import Card from './components/Cards';
 
 export default function Home() {
   return (
     <div>
       <h1>store</h1>
-      <p>description in store</p>
-      <Link href="/products">products</Link>
+      <Card />
     </div>
   );
 }
