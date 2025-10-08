@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-export default async function Products({ products }: { products: any[] }) {
+export default function Products({ products }: { products: any[] }) {
   const dispatch = useDispatch();
   return (
     <div className="flex flex-wrap justify-between">

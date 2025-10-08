@@ -7,7 +7,6 @@ export default async function Home() {
   const products = await res.json();
   return (
     <div>
-      <h1>store</h1>
       <Cards products={products} />
     </div>
   );
