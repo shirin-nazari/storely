@@ -14,8 +14,8 @@ const Navbar = () => {
         <li>Home</li>
         <li>Products</li>
       </ul>
-      <form action="" className="flex justify-between w-[40rem] ">
-        <div className="flex justify-between w-[30rem] h-10 items-center bg-indigo-50 p-2 rounded-2xl">
+      <form action="" className="flex justify-between w-[30rem] ">
+        <div className="flex justify-between w-[20rem] h-10 items-center bg-indigo-50 p-2 rounded-2xl outline-none">
           <input type="text" placeholder="Search Product" className="" />
           <FaSearch className="cursor-pointer text-blue-950" />
         </div>
