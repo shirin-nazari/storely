@@ -9,7 +9,11 @@ import { FaSearch } from 'react-icons/fa';
 const Navbar = () => {
   return (
     <nav className=" bg-blue-100 text-black flex items-center justify-around w-full h-full">
-      <Image src={storely} alt="logo" className="w-20 h-15  cursor-pointer" />
+      <Image
+        src={storely}
+        alt="logo"
+        className="w-20 h-15  cursor-pointer py-2"
+      />
       <ul className="flex justify-between w-50  cursor-pointer">
         <li>Home</li>
         <li>Products</li>

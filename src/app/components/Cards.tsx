@@ -7,10 +7,10 @@ import { useDispatch } from 'react-redux';
 export default function Products({ products }: { products: any[] }) {
   const dispatch = useDispatch();
   return (
-    <div className="flex flex-wrap justify-between">
+    <div className="w-full flex flex-wrap items-center justify-between gap-6 p-4">
       {products.map((item) => (
         <div
-          className="max-w-sm rounded overflow-hidden shadow-lg"
+          className="max-w-sm rounded overflow-hidden shadow-lg bg-cyan-800/50 w-xl h-xl"
           key={item.id}
         >
           <img className="w-fit h-fit" src={item.images[0]} alt={item.title} />
