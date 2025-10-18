@@ -1,32 +1,83 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import storely from '@/public/storely.png';
 import Image from 'next/image';
 import CategorySelect from './CategorySelect';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaBars, FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { FaSearch } from 'react-icons/fa';
+import Link from 'next/link';
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
   return (
-    <nav className=" bg-blue-100 text-black flex items-center justify-around w-full h-full">
-      <Image
-        src={storely}
-        alt="logo"
-        className="w-20 h-15  cursor-pointer py-2"
-      />
-      <ul className="flex justify-between w-50  cursor-pointer">
-        <li>Home</li>
-        <li>Products</li>
-      </ul>
-      <form action="" className="flex justify-between w-[30rem] ">
-        <div className="flex justify-between w-[20rem] h-10 items-center bg-indigo-50 p-2 rounded-2xl outline-none">
-          <input type="text" placeholder="Search Product" className="" />
-          <FaSearch className="cursor-pointer text-blue-950" />
+    <header className="sticky top-0 z-50 bg-blue-100 text-black shadow-sm">
+      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
+        <Link href="/" className="flex items-center">
+          <Image
+            src={storely}
+            alt="logo"
+            className="w-auto h-20  cursor-pointer py-2"
+            priority
+          />
+        </Link>
+        <ul className="hidden md:flex gap-8 cursor-pointer">
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href="/products">Products</Link>
+          </li>
+        </ul>
+        <form action="" className="hidden md:flex justify-between w-100 gap-4 ">
+          <div className="flex flex-1 items-center gap-2 rounded-2xl bg-indigo-50 px-3 py-2">
+            <input
+              type="text"
+              placeholder="Search Product"
+              className="w-full bg-transparent outline-none"
+            />
+            <FaSearch className="cursor-pointer text-blue-950" />
+          </div>
+          <CategorySelect />
+        </form>
+        <Link href="/cart" aria-label="Cart">
+          <FaShoppingCart className="cursor-pointer text-xl text-blue-950" />
+        </Link>
+        <button
+          className="ml-4 grid place-items-center text-2xl md:hidden"
+          onClick={() => setOpen((o) => !o)}
+          aria-label="Toggle menu"
+        >
+          {open ? <FaTimes /> : <FaBars />}
+        </button>
+      </nav>
+      {open && (
+        <div className="border-t border-blue-200 bg-blue-100 px-4 pb-4 md:hidden">
+          <form className="mt-4 flex-col items-center gap-y-8 ">
+            <div className="flex flex-1 items-center gap-2 rounded-2xl bg-indigo-50 px-3 py-2 ">
+              <input
+                type="text"
+                placeholder="Search Product"
+                className="w-full bg-transparent outline-none"
+              />
+              <FaSearch className="cursor-pointer text-blue-950" />
+            </div>
+            <CategorySelect classname="mt-4 py-2 w-full" />
+          </form>
+          <ul className="flex flex-col gap-4 pt-4">
+            <li>
+              <Link href="/" onClick={() => setOpen(false)}>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link href="/products" onClick={() => setOpen(false)}>
+                Products
+              </Link>
+            </li>
+          </ul>
         </div>
-        <CategorySelect />
-      </form>
-      <FaShoppingCart className="cursor-pointer text-blue-950" />
-    </nav>
+      )}
+    </header>
   );
 };
 

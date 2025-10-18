@@ -2,7 +2,10 @@
 import React from 'react';
 import useSWR from 'swr';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
-export default function CategorySelect() {
+interface PropsClassname {
+  classname?: string;
+}
+export default function CategorySelect({ classname }: PropsClassname) {
   const { data: products, error } = useSWR(
     'http://localhost:3000/api/products',
     fetcher
@@ -21,7 +24,9 @@ export default function CategorySelect() {
     );
   const categories = [...new Set(products.map((p: any) => p.category))];
   return (
-    <select className="text-black border-blue-500/30 border-2 rounded-2xl px-1 py-1">
+    <select
+      className={`text-black border-blue-500/30 border-2 rounded-2xl px-1 py-1 ${classname}`}
+    >
       <option value="">All Categories</option>
       {categories.map((cat, index) => (
         <option key={index} value={cat}>
