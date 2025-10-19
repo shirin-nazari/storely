@@ -1,6 +1,9 @@
 'use client';
 import React from 'react';
 import useSWR from 'swr';
+import { UseDispatch, useSelector } from 'react-redux';
+import { setCategory } from '@/src/redux/features/categorySlice';
+import { RootState } from '@/src/redux/store';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 interface PropsClassname {
   classname?: string;
