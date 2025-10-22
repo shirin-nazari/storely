@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import useSWR from 'swr';
-import { UseDispatch, useSelector } from 'react-redux';
+import { useDispatch, UseDispatch, useSelector } from 'react-redux';
 import { setCategory } from '@/src/redux/features/categorySlice';
 import { RootState } from '@/src/redux/store';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -9,6 +9,10 @@ interface PropsClassname {
   classname?: string;
 }
 export default function CategorySelect({ classname }: PropsClassname) {
+  const dispatch = useDispatch();
+  const selectedCategory = useSelector(
+    (state: RootState) => state.category.selectedCategory
+  );
   const { data: products, error } = useSWR(
     'http://localhost:3000/api/products',
     fetcher
@@ -29,6 +33,8 @@ export default function CategorySelect({ classname }: PropsClassname) {
   return (
     <select
       className={`text-black border-blue-500/30 border-2 rounded-2xl px-1 py-1 ${classname}`}
+      value={selectedCategory}
+      onChange={(e) => dispatch(setCategory(e.target.value))}
     >
       <option value="">All Categories</option>
       {categories.map((cat, index) => (

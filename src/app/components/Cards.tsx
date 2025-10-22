@@ -2,13 +2,31 @@
 import { addToCart } from '@/src/redux/cartSlice';
 import Image from 'next/image';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import useSWR from 'swr';
+import { RootState } from '@/src/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function Products({ products }: { products: any[] }) {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export default function Products() {
   const dispatch = useDispatch();
+  const selectedCategory = useSelector(
+    (state: RootState) => state.category.selectedCategory
+  );
+  const { data: products, error } = useSWR(
+    'http://localhost:3000/api/products',
+    fetcher
+  );
+  if (error) return <p>Error Loading...</p>;
+  if (!products) return <p>Loading...</p>;
+
+  const filteredProducts =
+    selectedCategory === ''
+      ? products
+      : products.filter((p: any) => p.category === selectedCategory);
+
   return (
     <div className="w-full flex flex-wrap items-center justify-between gap-6 p-4">
-      {products.map((item) => (
+      {filteredProducts.map((item: any) => (
         <div
           className="max-w-sm rounded overflow-hidden shadow-lg bg-cyan-800/50 w-xl h-xl"
           key={item.id}
