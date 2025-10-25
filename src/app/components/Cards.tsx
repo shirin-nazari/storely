@@ -2,27 +2,49 @@
 import { addToCart } from '@/src/redux/cartSlice';
 import Image from 'next/image';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import useSWR from 'swr';
+import { RootState } from '@/src/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function Products({ products }: { products: any[] }) {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export default function Products() {
   const dispatch = useDispatch();
+  const selectedCategory = useSelector(
+    (state: RootState) => state.category.selectedCategory
+  );
+  const searchQuery = useSelector((state: RootState) => state.search.query);
+  const { data: products, error } = useSWR(
+    'http://localhost:3000/api/products',
+    fetcher
+  );
+  if (error) return <p>Error Loading...</p>;
+  if (!products) return <p>Loading...</p>;
+
+  const filteredProducts = products
+    .filter((p: any) =>
+      selectedCategory === '' ? true : p.category === selectedCategory
+    )
+    .filter((p: any) =>
+      p.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
   return (
-    <div className="flex flex-wrap justify-between">
-      {products.map((item) => (
+    <div className="w-full flex flex-wrap items-center justify-between gap-6 p-4">
+      {filteredProducts.map((item: any) => (
         <div
-          className="max-w-sm rounded overflow-hidden shadow-lg"
+          className="max-w-sm rounded overflow-hidden shadow-lg bg-[#DC4123] w-xl h-xl"
           key={item.id}
         >
           <img className="w-fit h-fit" src={item.images[0]} alt={item.title} />
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">{item.title}</div>
-            <p className="text-gray-700 text-base">{item.description}</p>
+            <p className="text-[#793937]  text-base">{item.description}</p>
           </div>
           <div className="px-6 pt-4 pb-2">
             <button className="inline-block bg-red-800 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
               {item.price}
             </button>
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-[#793937] mr-2 mb-2">
               {item.category}
             </span>
             <button
