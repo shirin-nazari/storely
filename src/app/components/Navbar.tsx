@@ -1,14 +1,19 @@
 'use client';
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import storely from '@/public/storely.png';
 import Image from 'next/image';
 import CategorySelect from './CategorySelect';
 import { FaBars, FaShoppingCart, FaTimes } from 'react-icons/fa';
 import { FaSearch } from 'react-icons/fa';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/src/redux/store';
+import { setSearchQuery } from '@/src/redux/features/searchSlice';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const searchQuery = useSelector((state: RootState) => state.search.query);
   return (
     <header className="sticky top-0 z-50 bg-blue-100 text-black shadow-sm">
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
@@ -28,12 +33,17 @@ const Navbar = () => {
             <Link href="/products">Products</Link>
           </li>
         </ul>
-        <form action="" className="hidden md:flex justify-between w-100 gap-4 ">
+        <form
+          action=""
+          onSubmit={(e) => e.preventDefault()}
+          className="hidden md:flex justify-between w-100 gap-4 "
+        >
           <div className="flex flex-1 items-center gap-2 rounded-2xl bg-indigo-50 px-3 py-2">
             <input
               type="text"
               placeholder="Search Product"
               className="w-full bg-transparent outline-none"
+              onChange={(e) => dispatch(setSearchQuery(e.target.value))}
             />
             <FaSearch className="cursor-pointer text-blue-950" />
           </div>

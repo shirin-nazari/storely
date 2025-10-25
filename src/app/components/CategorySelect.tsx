@@ -37,7 +37,7 @@ export default function CategorySelect({ classname }: PropsClassname) {
       onChange={(e) => dispatch(setCategory(e.target.value))}
     >
       <option value="">All Categories</option>
-      {categories.map((cat, index) => (
+      {categories.map((cat: any, index) => (
         <option key={index} value={cat}>
           {cat}
         </option>
