@@ -32,13 +32,15 @@ export default function Products() {
     <div className="w-full flex flex-wrap items-center justify-between gap-6 p-4">
       {filteredProducts.map((item: any) => (
         <div
-          className="max-w-sm rounded overflow-hidden shadow-lg bg-[#DC4123] w-xl h-xl"
+          className="max-w-sm rounded overflow-hidden shadow-lg bg-[#C6BEB3] w-xl h-xl"
           key={item.id}
         >
           <img className="w-fit h-fit" src={item.images[0]} alt={item.title} />
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">{item.title}</div>
-            <p className="text-[#793937]  text-base">{item.description}</p>
+            <div className="font-bold text-xl mb-2 text-[#DC4123]">
+              {item.title}
+            </div>
+            <p className=" text-[#793937] text-base">{item.description}</p>
           </div>
           <div className="px-6 pt-4 pb-2">
             <button className="inline-block bg-red-800 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
