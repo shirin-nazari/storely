@@ -14,6 +14,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const searchQuery = useSelector((state: RootState) => state.search.query);
+  const shoppingCard = useSelector((state: RootState) => state.cart.items);
   return (
     <header className="sticky top-0 z-50 bg-blue-100 text-black shadow-sm">
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
@@ -50,6 +51,14 @@ const Navbar = () => {
           <CategorySelect />
         </form>
         <Link href="/cart" aria-label="Cart">
+          {shoppingCard.length == 0 ? (
+            ''
+          ) : (
+            <p className="bg-[#DC4123] w-5 h-5 mx-3 rounded-full text-white text-center text-sm">
+              {shoppingCard.length}
+            </p>
+          )}
+
           <FaShoppingCart className="cursor-pointer text-xl text-blue-950" />
         </Link>
         <button
