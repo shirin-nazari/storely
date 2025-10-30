@@ -1,9 +1,9 @@
-import Cards from './components/Cards';
+import Products from './components/Products';
 
 export default async function Home() {
   return (
     <div>
-      <Cards />
+      <Products />
     </div>
   );
 }
