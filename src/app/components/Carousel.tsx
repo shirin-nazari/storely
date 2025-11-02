@@ -39,7 +39,7 @@ const Carousel = () => {
         ))}
       </div>
 
-      {/* دکمه قبلی */}
+      {/* preview button*/}
       <button
         onClick={prevSlide}
         type="button"
@@ -65,7 +65,7 @@ const Carousel = () => {
         </span>
       </button>
 
-      {/* دکمه بعدی */}
+      {/* next button*/}
       <button
         onClick={nextSlide}
         type="button"
