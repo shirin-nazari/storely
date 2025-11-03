@@ -19,12 +19,12 @@ const Carousel = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative w-full h-mvh overflow-hidden">
       <div className="relative h-56 md:h-100">
         {banners.map((img, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out h-full ${
               index === currentIndex ? 'opacity-100' : 'opacity-0'
             }`}
           >
