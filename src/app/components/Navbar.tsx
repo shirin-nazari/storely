@@ -13,7 +13,7 @@ import { setSearchQuery } from '@/src/redux/features/searchSlice';
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const searchQuery = useSelector((state: RootState) => state.search.query);
+
   const shoppingCard = useSelector((state: RootState) => state.cart.items);
   return (
     <header className="sticky top-0 z-50 bg-blue-100 text-black shadow-sm">
