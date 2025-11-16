@@ -50,7 +50,7 @@ const Navbar = () => {
           </div>
           <CategorySelect />
         </form>
-        <Link href="/cart" aria-label="Cart">
+        <Link href="/carts" aria-label="Cart">
           {shoppingCard.length == 0 ? (
             ''
           ) : (
