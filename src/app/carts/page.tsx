@@ -9,12 +9,14 @@ const page = () => {
   return (
     <div>
       <h1 className="font-bold text-3xl text-lime-900">Storely Shopping</h1>
-      {selectedShop.map((item) => (
-        <div key={item.id} className="bg-amber-200 text-black">
-          <h2>{item.title}</h2>
-          <span>{item.price}</span>
-        </div>
-      ))}
+      <div className="flex flex-col justify-between h-lg">
+        {selectedShop.map((item) => (
+          <div key={item.id} className="bg-amber-600 text-black gap-10">
+            <h2>{item.title}</h2>
+            <span>{item.price}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
