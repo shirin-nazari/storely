@@ -13,7 +13,7 @@ const page = () => {
       <div className="flex flex-col gap-4 h-lg">
         {selectedShop.map((item) => (
           <div key={item.id} className="bg-amber-600 text-black gap-10">
-            <Image src={item.image} alt={item.title} />
+            <img src={item.image} alt={item.title} />
             <h2>{item.title}</h2>
             <span>{item.price}</span>
           </div>
