@@ -50,6 +50,20 @@ const Navbar = () => {
           </div>
           <CategorySelect />
         </form>
+        <div className="hidden md:flex  gap-2">
+          <Link
+            href="/login"
+            className="bg-blue-950 text-white px-2 py-1 rounded-full"
+          >
+            Login
+          </Link>
+          <Link
+            href="/register"
+            className="bg-blue-950 text-white px-2 py-1 rounded-full"
+          >
+            Sign Up
+          </Link>
+        </div>
         <Link href="/carts" aria-label="Cart">
           {shoppingCard.length == 0 ? (
             ''
@@ -61,6 +75,7 @@ const Navbar = () => {
 
           <FaShoppingCart className="cursor-pointer text-xl text-blue-950" />
         </Link>
+
         <button
           className="ml-4 grid place-items-center text-2xl md:hidden"
           onClick={() => setOpen((o) => !o)}
@@ -71,6 +86,10 @@ const Navbar = () => {
       </nav>
       {open && (
         <div className="border-t border-blue-200 bg-blue-100 px-4 pb-4 md:hidden">
+          <div className="flex flex-col gap-4 pt-4">
+            <Link href="/login">Login</Link>
+            <Link href="/register">Sign Up</Link>
+          </div>
           <form className="mt-4 flex-col items-center gap-y-8 ">
             <div className="flex flex-1 items-center gap-2 rounded-2xl bg-indigo-50 px-3 py-2 ">
               <input
