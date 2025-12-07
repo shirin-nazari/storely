@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
 const prisma = new PrismaClient();
 export const authOptions = {
   providers: [
@@ -15,8 +17,15 @@ export const authOptions = {
           where: { email: credentials?.email },
         });
         if (!user) return null;
-        if (user.password !== credentials?.password) return null;
+        const isValid = await bcrypt.compare(
+          credentials?.password,
+          user.password
+        );
+        if (!isValid) return null;
         return user;
+
+        // if (user.password !== credentials?.password) return null;
+        // return user;
       },
     }),
   ],
