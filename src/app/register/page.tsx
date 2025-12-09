@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 
 export default function SignupPage() {
   const [loading, setLoading] = useState(false);

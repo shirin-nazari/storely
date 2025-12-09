@@ -1,25 +1,21 @@
-import { prisma } from '@/lib/prisma';
-export async function POST(req: Request) {
-  const { userId, productId } = await req.json();
-  let cart = await prisma.cart.findUnique({ where: { userId } });
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../auth/[...nextauth]/route';
+import { PrismaClient } from '@prisma/client';
+import { NextRequest } from 'next/server';
 
-  if (!cart) {
-    cart = await prisma.cart.create({
-      data: { userId },
-    });
-  }
-  const item = await prisma.cartItem.findFirst({
-    where: { cartId: cart.id, productId },
+const prisma = new PrismaClient();
+
+export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!session) return Response.json({ error: 'Unauthorized' });
+
+  const data = await req.json();
+
+  await prisma.cart.upsert({
+    where: { userId: session?.user?.id },
+    update: { items: data.items },
+    create: { userId: session?.user?.id, items: data.items },
   });
-  if (item) {
-    await prisma.cartItem.update({
-      where: { id: item.id },
-      data: { quantity: { increment: 1 } },
-    });
-  } else {
-    await prisma.cartItem.create({
-      data: { cartId: cart.id, productId, quantity: 1 },
-    });
-  }
+
   return Response.json({ success: true });
 }
