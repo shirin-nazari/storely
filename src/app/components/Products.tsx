@@ -1,5 +1,5 @@
 'use client';
-import { addToCart } from '@/src/redux/cartSlice';
+// import { addToCart } from '@/src/redux/cartSlice';
 import Image from 'next/image';
 import React from 'react';
 import useSWR from 'swr';
@@ -8,6 +8,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import ExpandableText from './ExpandableText';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+async function addToCart(productId) {
+  const res = await fetch('/api/cart/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ productId, quantity: 1 }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.error);
+  } else {
+    alert('Added to cart!');
+  }
+}
 export default function Products() {
   const dispatch = useDispatch();
   const selectedCategory = useSelector(
@@ -59,7 +74,8 @@ export default function Products() {
               {item.category}
             </span>
             <button
-              onClick={() => dispatch(addToCart(item))}
+              // onClick={() => dispatch(addToCart(item))}
+              onClick={() => addToCart(item.id)}
               className="inline-block bg-cyan-800 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
             >
               Add to Cart
