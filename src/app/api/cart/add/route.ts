@@ -22,7 +22,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // پیدا کردن کارت کاربر
     let cart = await prisma.cart.findUnique({
       where: { userId: user.id },
       include: { items: true },
