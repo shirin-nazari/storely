@@ -1,12 +1,28 @@
 'use client';
-import { addToCart } from '@/src/redux/cartSlice';
+// import { addToCart } from '@/src/redux/cartSlice';
 import Image from 'next/image';
 import React from 'react';
 import useSWR from 'swr';
 import { RootState } from '@/src/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
+import ExpandableText from './ExpandableText';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+async function addToCart(productId) {
+  const res = await fetch('/api/cart/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ productId, quantity: 1 }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.error);
+  } else {
+    alert('Added to cart!');
+  }
+}
 export default function Products() {
   const dispatch = useDispatch();
   const selectedCategory = useSelector(
@@ -29,16 +45,26 @@ export default function Products() {
     );
 
   return (
-    <div className="w-full flex flex-wrap items-center justify-between gap-6 p-4">
+    <div className="w-full flex flex-wrap items-center justify-evenly gap-6 p-4">
       {filteredProducts.map((item: any) => (
         <div
-          className="max-w-sm rounded overflow-hidden shadow-lg bg-[#DC4123] w-xl h-xl"
+          className="max-w-sm rounded overflow-hidden shadow-lg bg-[#C6BEB3] w-xl h-lg"
           key={item.id}
         >
-          <img className="w-fit h-fit" src={item.images[0]} alt={item.title} />
+          <img
+            className="w-fit h-60 m-auto"
+            src={item.images[0]}
+            alt={item.title}
+          />
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">{item.title}</div>
-            <p className="text-[#793937]  text-base">{item.description}</p>
+            <div className="font-bold text-xl mb-2 text-[#DC4123]">
+              {item.title}
+            </div>
+            <ExpandableText
+              classname="text-[#793937] text-base"
+              text={item.description}
+            />
+            {/* <p className=" ">{item.description}</p> */}
           </div>
           <div className="px-6 pt-4 pb-2">
             <button className="inline-block bg-red-800 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
@@ -48,7 +74,8 @@ export default function Products() {
               {item.category}
             </span>
             <button
-              onClick={() => dispatch(addToCart(item))}
+              // onClick={() => dispatch(addToCart(item))}
+              onClick={() => addToCart(item.id)}
               className="inline-block bg-cyan-800 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
             >
               Add to Cart

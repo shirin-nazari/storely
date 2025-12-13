@@ -1,5 +1,5 @@
 'use client';
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import storely from '@/public/storely.png';
 import Image from 'next/image';
 import CategorySelect from './CategorySelect';
@@ -13,7 +13,8 @@ import { setSearchQuery } from '@/src/redux/features/searchSlice';
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const searchQuery = useSelector((state: RootState) => state.search.query);
+
+  const shoppingCard = useSelector((state: RootState) => state.cart.items);
   return (
     <header className="sticky top-0 z-50 bg-blue-100 text-black shadow-sm">
       <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
@@ -49,9 +50,32 @@ const Navbar = () => {
           </div>
           <CategorySelect />
         </form>
-        <Link href="/cart" aria-label="Cart">
+        <div className="hidden md:flex  gap-2">
+          <Link
+            href="/login"
+            className="bg-blue-950 text-white px-2 py-1 rounded-full"
+          >
+            Login
+          </Link>
+          <Link
+            href="/register"
+            className="bg-blue-950 text-white px-2 py-1 rounded-full"
+          >
+            Sign Up
+          </Link>
+        </div>
+        <Link href="/carts" aria-label="Cart">
+          {shoppingCard.length == 0 ? (
+            ''
+          ) : (
+            <p className="bg-[#DC4123] w-5 h-5 mx-3 rounded-full text-white text-center text-sm">
+              {shoppingCard.length}
+            </p>
+          )}
+
           <FaShoppingCart className="cursor-pointer text-xl text-blue-950" />
         </Link>
+
         <button
           className="ml-4 grid place-items-center text-2xl md:hidden"
           onClick={() => setOpen((o) => !o)}
@@ -62,6 +86,10 @@ const Navbar = () => {
       </nav>
       {open && (
         <div className="border-t border-blue-200 bg-blue-100 px-4 pb-4 md:hidden">
+          <div className="flex flex-col gap-4 pt-4">
+            <Link href="/login">Login</Link>
+            <Link href="/register">Sign Up</Link>
+          </div>
           <form className="mt-4 flex-col items-center gap-y-8 ">
             <div className="flex flex-1 items-center gap-2 rounded-2xl bg-indigo-50 px-3 py-2 ">
               <input
