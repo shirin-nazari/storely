@@ -18,7 +18,18 @@ export default function LoginPage() {
     <form onSubmit={handleSubmit} className="bg-amber-500">
       <input name="email" placeholder="email" />
       <input name="password" type="password" />
-      <button type="submit">Login</button>
+      <button
+        type="submit"
+        onClick={() =>
+          signIn('credentials', {
+            email,
+            password,
+            redirect: false,
+          })
+        }
+      >
+        Login
+      </button>
     </form>
   );
 }

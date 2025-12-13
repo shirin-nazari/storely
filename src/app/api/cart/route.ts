@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   const session = await getServerSession();
-
+  console.log(session);
   if (!session?.user?.email) {
     return NextResponse.json([], { status: 200 }); // کاربر لاگین نیست
   }
