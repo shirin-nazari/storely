@@ -38,7 +38,7 @@ export default function Cart() {
   return (
     <div>
       {data.map((item) => (
-        <div key={item.id}>
+        <div key={item.id} className="bg-amber-500">
           <p>{item.productId}</p>
           <p>Qty: {item.quantity}</p>
         </div>
